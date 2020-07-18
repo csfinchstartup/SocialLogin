@@ -1,5 +1,5 @@
-var passport = require('passport')
-  , GitHubStrategy = require('passport-github').Strategy;
+var passport = require('passport');
+var GitHubStrategy = require('passport-github').Strategy;
 var User = require('../models/User');
 
 passport.use(new GitHubStrategy({

@@ -17,17 +17,13 @@ app.use(passport.session());
 app.set('views', './Views');
 app.set('view engine', 'ejs');
 app.use(express.static(__dirname + '/public'));
-//set ejs laytouts
 app.use(expressLayouts);
 
 //models for the database
-var models = require('./Models');
-
+var models = require('./models');
 //routes
-var routes = require('./Routes/index.js')(app);
-
-//passport config
-require('./config/passport.js')(passport, models.User);
+var index = require('./routes/index');
+app.use('/', index);
 
 //sync db
 models.sequelize.sync().then(function(){

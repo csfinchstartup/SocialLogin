@@ -3,6 +3,8 @@ var app = express();
 var passport = require('passport');
 var session = require('express-session');
 var bodyParser = require('body-parser');
+var https = require('https');
+var fs = require('fs');
 var expressLayouts = require('express-ejs-layouts');
 
 //bodyparser setup
@@ -23,6 +25,7 @@ app.use(expressLayouts);
 var models = require('./models');
 //routes
 var index = require('./routes/index');
+const { fstat } = require('fs');
 app.use('/', index);
 
 //sync db
@@ -33,8 +36,8 @@ models.sequelize.sync().then(function(){
 });
 
 //run app
-app.listen(3000, function(err){
-	if(!err)
-		console.log('app is working correctly.');
-	console.log(err);
-});
+https.createServer({
+	key: fs.readFileSync('./key.pem'),
+	cert: fs.readFileSync('./cert.pem'),
+	passphrase: '7@kers2323!'
+}, app).listen(3000);
